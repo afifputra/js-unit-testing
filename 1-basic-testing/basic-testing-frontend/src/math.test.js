@@ -12,3 +12,11 @@ it("should summarize all number values in an array", () => {
   const expectedResult = numbers.reduce((a, b) => a + b, 0);
   expect(result).toBe(expectedResult);
 });
+
+it("should return 0 if the array is empty", () => {
+  const numbers = [];
+
+  const result = add(numbers);
+  const expectedResult = 0;
+  expect(result).toBe(expectedResult);
+});
