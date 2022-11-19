@@ -1,7 +1,7 @@
 import { it, expect } from "vitest";
 import { transformToNumber } from "./numbers";
 
-it("should transform a string to a number", () => {
+it("should yield a number if transform a string of number to a number", () => {
   const input = "1";
 
   const result = transformToNumber(input);
@@ -9,12 +9,18 @@ it("should transform a string to a number", () => {
   expect(result).toBe(1);
 });
 
-it("should throw an error if value is a alphabet", () => {
+it("should yield NaN if value is a alphabet", () => {
   const input = "a";
 
-  const resultFn = () => {
-    transformToNumber(input);
-  };
+  const result = transformToNumber(input);
 
-  expect(resultFn).toThrow(/is not a number/);
+  expect(result).toBeNaN();
+});
+
+it("should yield NaN if value is a symbol", () => {
+  const input = "!";
+
+  const result = transformToNumber(input);
+
+  expect(result).toBeNaN();
 });
