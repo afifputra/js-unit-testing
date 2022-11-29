@@ -9,18 +9,13 @@ it("should yield a number if transform a string of number to a number", () => {
   expect(result).toBe(1);
 });
 
-it("should yield NaN if value is a alphabet", () => {
+it("should yield NaN if non-transformable values sign", () => {
   const input = "a";
+  const input2 = {};
 
   const result = transformToNumber(input);
+  const result2 = transformToNumber(input2);
 
   expect(result).toBeNaN();
-});
-
-it("should yield NaN if value is a symbol", () => {
-  const input = "!";
-
-  const result = transformToNumber(input);
-
-  expect(result).toBeNaN();
+  expect(result2).toBeNaN();
 });
