@@ -42,8 +42,6 @@ describe("generateResultText", () => {
   });
 });
 
-describe("outputResult", () => {});
-
 // describe("outputResult", () => {
 //   it('should set the textContent of the result element to "Result: 5"', () => {
 //     const resultElement = { textContent: "" };
