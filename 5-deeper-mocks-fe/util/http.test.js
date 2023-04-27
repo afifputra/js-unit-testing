@@ -5,22 +5,26 @@ import { HttpError } from "./errors";
 
 const testResponseData = { testKey: "testData" };
 
-const testFetch = vi.fn((url, options) => {
-  return new Promise((resolve, reject) => {
-    if (typeof options.body !== "string") {
-      return reject(new Error("Body is not a string"));
-    }
-    const testResponse = {
-      ok: true,
-      json: () => {
-        return new Promise((resolve, reject) => {
-          resolve(testResponseData);
-        });
-      },
-    };
-    resolve(testResponse);
-  });
-});
+const fetchFn = (okStatus) => {
+  return (url, options) => {
+    return new Promise((resolve, reject) => {
+      if (typeof options.body !== "string") {
+        return reject(new Error("Body is not a string"));
+      }
+      const testResponse = {
+        ok: okStatus,
+        json: () => {
+          return new Promise((resolve, reject) => {
+            resolve(testResponseData);
+          });
+        },
+      };
+      resolve(testResponse);
+    });
+  };
+};
+
+const testFetch = vi.fn(fetchFn(true));
 
 vi.stubGlobal("fetch", testFetch);
 
@@ -46,19 +50,7 @@ it("should convert the provided data to JSON before sending the request", async 
 });
 
 it("should throw an HttpError in case of non-ok responses", async () => {
-  testFetch.mockImplementationOnce((url, options) => {
-    return new Promise((resolve, reject) => {
-      const testResponse = {
-        ok: false,
-        json: () => {
-          return new Promise((resolve, reject) => {
-            resolve(testResponseData);
-          });
-        },
-      };
-      resolve(testResponse);
-    });
-  });
+  testFetch.mockImplementationOnce(fetchFn(false));
 
   const testData = { key: "test" };
 
