@@ -4,14 +4,10 @@ import { extractPostData, savePost } from "./posts";
 
 const testTitle = "Test Title";
 const testContent = "Test Content";
-let testFormData = {
-  title: testTitle,
-  content: testContent,
-};
+let testFormData = null;
 
 describe("extractPostData", () => {
   beforeEach(() => {
-    // make a fake form object
     testFormData = {
       get: (key) => {
         return key === "title" ? testTitle : testContent;
@@ -29,11 +25,10 @@ describe("extractPostData", () => {
 
 describe("savePost", () => {
   beforeEach(() => {
-    // testFormData = {
-    //   get: (key) => {
-    //     return key === "title" ? testTitle : testContent;
-    //   },
-    // };
+    testFormData = {
+      title: testTitle,
+      content: testContent,
+    };
 
     vi.stubGlobal(
       "fetch",
