@@ -5,7 +5,7 @@ import { HttpError } from "./errors";
 
 const testResponseData = { testKey: "testData" };
 
-const fetchFn = (okStatus) => {
+export const fetchFn = (okStatus) => {
   return (url, options) => {
     return new Promise((resolve, reject) => {
       if (typeof options.body !== "string") {
